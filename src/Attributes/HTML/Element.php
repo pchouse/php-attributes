@@ -16,7 +16,7 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
     private array $options = [];
 
     /**
-     * @param \PChouse\Attributes\HTML\Tag $tag                        The HTML tag
+     * @param \PChouse\Attributes\HTML\Tag|null $tag                   The HTML tag
      * @param \PChouse\Attributes\HTML\InputType|null $type            Specifies the type <input> element to display
      * @param string|null $name                                        Specifies the name of an <input> element
      * @param string|null $id                                          The html element id
@@ -65,10 +65,9 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
      * @param int|null $position                                       The position in the form
      * @param int|null $layoutWeight                                   The weight of the element in layout
      *
-     * @throws \PChouse\Attributes\AttributesException
      */
     public function __construct(
-        private Tag                $tag,
+        private Tag|null           $tag = null,
         private InputType|null     $type = null,
         private string|null        $name = null,
         private string|null        $id = null,
@@ -96,7 +95,6 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
         private int|null           $position = null,
         private int|null           $layoutWeight = null
     ) {
-        $this->validateType();
     }
 
     /**
@@ -104,15 +102,15 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
      */
     protected function validateType(): void
     {
-        if ($this->tag === Tag::INPUT && $this->type === null) {
+        if ($this->tag === null) {
             throw new AttributesException(
-                "Element with tag input must have the type defined"
+                "Element tag must be defined"
             );
         }
 
-        if ($this->type !== null && $this->tag !== Tag::INPUT) {
+        if ($this->tag === Tag::INPUT && $this->type === null) {
             throw new AttributesException(
-                "Type is only to be defined for elements with tag input"
+                "Element with tag input must have the type defined"
             );
         }
     }
@@ -121,9 +119,9 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
     /**
      * Html tag
      *
-     * @return \PChouse\Attributes\HTML\Tag
+     * @return \PChouse\Attributes\HTML\Tag|null
      */
-    public function getTag(): Tag
+    public function getTag(): Tag|null
     {
         return $this->tag;
     }
@@ -157,11 +155,9 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
      * @param \PChouse\Attributes\HTML\InputType|null $type
      *
      * @return Element
-     * @throws \PChouse\Attributes\AttributesException
      */
     public function setType(?InputType $type): Element
     {
-        $this->validateType();
         $this->type = $type;
         return $this;
     }
@@ -788,9 +784,11 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
 
     /**
      * @return array
+     * @throws \PChouse\Attributes\AttributesException
      */
     public function jsonSerialize(): array
     {
+        $this->validateType();
         $reflection        = new \ReflectionClass($this);
         $properties        = $reflection->getProperties();
         $values            = [];
@@ -848,11 +846,13 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
     /**
      * @return string
      * @throws \PChouse\Attributes\HTML\SerializeException
+     * @throws \PChouse\Attributes\AttributesException
      */
     public function toString(): string
     {
+        $this->validateType();
         $array  = $this->toArray();
-        $string = "<" . $this->tag->value;
+        $string = "<" . ($this->tag?->value ?? "");
         unset($array["tag"]);
         \array_walk(
             $array,
@@ -880,8 +880,9 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
 
     /**
      * @throws \PChouse\Attributes\HTML\SerializeException
+     * @throws \PChouse\Attributes\AttributesException
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }
