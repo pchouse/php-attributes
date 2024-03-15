@@ -77,7 +77,8 @@ class ColumnTest extends TestCase
             decimalPrecision: $decimalPrecision,
             decimalScale: $decimalScale,
             regExp: $regExp,
-            isPrimaryKey: true
+            isPrimaryKey: true,
+            isPKAutoIncrement: false
         );
 
         $this->assertSame($name, $column->getName());
@@ -90,6 +91,31 @@ class ColumnTest extends TestCase
         $this->assertSame($decimalScale, $column->getDecimalScale());
         $this->assertSame($regExp, $column->getRegExp());
         $this->assertTrue($column->getIsPrimaryKey());
+        $this->assertFalse($column->getIsPKAutoIncrement());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAutoSetAutoincrement(): void
+    {
+        $column = new Column(
+            isPrimaryKey: true
+        );
+
+        $this->assertTrue($column->getIsPKAutoIncrement());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAutoSetAutoincrementNull(): void
+    {
+        $column = new Column(
+            isPrimaryKey: false
+        );
+
+        $this->assertNull($column->getIsPKAutoIncrement());
     }
 
     /**

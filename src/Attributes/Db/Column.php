@@ -42,7 +42,10 @@ class Column
      * @param int|null $decimalPrecision              The database column decimal precision
      * @param int|null $decimalScale                  The database column decimal scale
      * @param string|null $regExp                     A RegExp to validate the values
-     * @param bool $isPrimaryKey
+     * @param bool $isPrimaryKey                      Define if column is PK
+     * @param bool|null $isPKAutoIncrement            Define if the primary key is autoincrement,
+     *                                                if column is PK and autoincrement is not defined
+     *                                                than will be set to true
      *
      * @throws \PChouse\Attributes\Db\ColumnAttributeException
      */
@@ -57,10 +60,15 @@ class Column
         private ?int           $decimalScale = null,
         private ?string        $regExp = null,
         private bool           $isPrimaryKey = false,
+        private ?bool          $isPKAutoIncrement = null,
     ) {
         $this->verifyLengths();
         $this->verifyDecimalScale();
         $this->verifyDecimalPrecision();
+
+        if ($this->isPKAutoIncrement === null && $this->isPrimaryKey) {
+            $this->isPKAutoIncrement = true;
+        }
     }
 
     /**
@@ -377,6 +385,25 @@ class Column
     public function getIsPrimaryKey(): bool
     {
         return $this->isPrimaryKey;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getIsPKAutoIncrement(): ?bool
+    {
+        return $this->isPKAutoIncrement;
+    }
+
+    /**
+     * @param bool|null $isPKAutoIncrement
+     *
+     * @return Column
+     */
+    public function setIsPKAutoIncrement(?bool $isPKAutoIncrement): Column
+    {
+        $this->isPKAutoIncrement = $isPKAutoIncrement;
+        return $this;
     }
 
     /**
