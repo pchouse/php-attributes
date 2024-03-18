@@ -15,7 +15,7 @@ class FormTest extends TestCase
     /**
      * @test
      * @return array
-     * @throws \PChouse\Attributes\HTML\Cache\CacheException
+     * @throws \PChouse\Attributes\HTML\Cache\HtmlCacheException
      * @throws \PChouse\Attributes\HTML\HtmlException
      * @throws \PChouse\Attributes\HTML\SerializeException
      */
@@ -220,7 +220,7 @@ class FormTest extends TestCase
      *
      * @return void
      * @throws \PChouse\Attributes\HTML\HtmlException
-     * @throws \PChouse\Attributes\HTML\Cache\CacheException
+     * @throws \PChouse\Attributes\HTML\Cache\HtmlCacheException
      */
     public function testFormCached(array $expect): void
     {

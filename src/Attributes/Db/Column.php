@@ -460,7 +460,7 @@ class Column
      *
      * @return array<string, \PChouse\Attributes\Db\Column>
      * @throws \PChouse\Attributes\AttributesException
-     * @throws \PChouse\Attributes\HTML\Cache\CacheException
+     * @throws \PChouse\Attributes\HTML\Cache\HtmlCacheException
      */
     public static function parse(\ReflectionClass $attachedReflectionClass, ?ITypeMap $typeMap): array
     {

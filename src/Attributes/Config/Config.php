@@ -7,6 +7,8 @@ use PChouse\Attributes\HTML\Cache\Cache as HtmlCache;
 use PChouse\Attributes\HTML\Cache\ICache as HtmlICache;
 use PChouse\Attributes\Db\Cache\Cache as DbCache;
 use PChouse\Attributes\Db\Cache\ICache as DbICache;
+use PChouse\Attributes\Filter\Cache\ICache as FilterICache;
+use PChouse\Attributes\Filter\Cache\Cache as FilterCache;
 
 class Config
 {
@@ -15,8 +17,8 @@ class Config
 
     protected HtmlICache|null $htmlCache = null;
 
-
-    protected DbICache|null $dbICache = null;
+    protected DbICache|null     $dbICache     = null;
+    protected FilterICache|null $filterICache = null;
 
     protected function __construct()
     {
@@ -28,6 +30,7 @@ class Config
             static::$config = new Config();
             static::$config->setHtmlCache(HtmlCache::instance());
             static::$config->setDbCache(DbCache::instance());
+            static::$config->setFilterCache(FilterCache::instance());
         }
         return static::$config;
     }
@@ -67,6 +70,25 @@ class Config
     public function setDbCache(?DbICache $dbICache): Config
     {
         $this->dbICache = $dbICache;
+        return $this;
+    }
+
+    /**
+     * @return \PChouse\Attributes\Filter\Cache\ICache|null
+     */
+    public function getFilterCache(): ?FilterICache
+    {
+        return $this->filterICache;
+    }
+
+    /**
+     * @param \PChouse\Attributes\Filter\Cache\ICache|null $filterICache
+     *
+     * @return Config
+     */
+    public function setFilterCache(?FilterICache $filterICache): Config
+    {
+        $this->filterICache = $filterICache;
         return $this;
     }
 }

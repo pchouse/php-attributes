@@ -5,7 +5,7 @@ namespace PChouse\Attributes\HTML;
 
 use PChouse\Attributes\AAttributes;
 use PChouse\Attributes\Config\Config;
-use PChouse\Attributes\HTML\Cache\CacheException;
+use PChouse\Attributes\HTML\Cache\HtmlCacheException;
 
 class CachedForm extends AAttributes
 {
@@ -38,13 +38,13 @@ class CachedForm extends AAttributes
 
     /**
      * @return array
-     * @throws \PChouse\Attributes\HTML\Cache\CacheException
+     * @throws \PChouse\Attributes\HTML\Cache\HtmlCacheException
      */
     public function toStackArray(): array
     {
         return Config::instance()->getHtmlCache()?->getFromCache(
             $this->getAttachedReflectionClass() ??
-            throw new CacheException("Reflection attached class not defined")
-        ) ?? throw new CacheException("The array not exist in cache");
+            throw new HtmlCacheException("Reflection attached class not defined")
+        ) ?? throw new HtmlCacheException("The array not exist in cache");
     }
 }

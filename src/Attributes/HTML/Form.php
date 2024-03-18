@@ -558,7 +558,7 @@ class Form extends CachedForm implements \JsonSerializable, \Stringable
     /**
      * @throws \PChouse\Attributes\HTML\SerializeException
      * @throws \PChouse\Attributes\HTML\HtmlException
-     * @throws \PChouse\Attributes\HTML\Cache\CacheException
+     * @throws \PChouse\Attributes\HTML\Cache\HtmlCacheException
      */
     public function toStackArray(): array
     {

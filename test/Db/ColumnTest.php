@@ -22,7 +22,7 @@ class ColumnTest extends TestCase
 {
 
     /**
-     * @throws \PChouse\Attributes\HTML\Cache\CacheException
+     * @throws \PChouse\Attributes\HTML\Cache\HtmlCacheException
      */
     public function setUp(): void
     {
@@ -247,7 +247,7 @@ class ColumnTest extends TestCase
      * @test
      * @return void
      * @throws \PChouse\Attributes\AttributesException
-     * @throws \PChouse\Attributes\HTML\Cache\CacheException
+     * @throws \PChouse\Attributes\HTML\Cache\HtmlCacheException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testParseMyClass(): void
@@ -308,7 +308,7 @@ class ColumnTest extends TestCase
      * @test
      * @return void
      * @throws \PChouse\Attributes\AttributesException
-     * @throws \PChouse\Attributes\HTML\Cache\CacheException
+     * @throws \PChouse\Attributes\HTML\Cache\HtmlCacheException
      */
     public function testParseMyOtherClass(): void
     {

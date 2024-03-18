@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PChouse\Attributes\Db\Cache;
+namespace PChouse\Attributes\Filter\Cache;
 
 use PChouse\Attributes\IBaseCache;
 
@@ -10,12 +10,6 @@ use PChouse\Attributes\IBaseCache;
  */
 interface ICache extends IBaseCache
 {
-    public function cacheKey(\ReflectionClass $reflectionClass): string;
-
-
-    public function cacheExist(\ReflectionClass $reflectionClass): bool;
-
-
     public function getFromCache(\ReflectionClass $reflectionClass): string|null;
 
     /**
@@ -23,9 +17,4 @@ interface ICache extends IBaseCache
      */
     public function putInCache(\ReflectionClass $reflectionClass, string $string): void;
 
-    /**
-     * @return void
-     * @throws \PChouse\Attributes\HTML\Cache\HtmlCacheException
-     */
-    public function clearCache(): void;
 }

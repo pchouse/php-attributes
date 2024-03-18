@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PChouse\Attributes\Db\Cache;
+namespace PChouse\Attributes\Filter\Cache;
 
 use PChouse\Attributes\ABaseCache;
 
@@ -20,13 +20,13 @@ class Cache extends ABaseCache implements ICache
                 "%s%s%s",
                 ATTRIBUTES_CACHE_DIR,
                 DIRECTORY_SEPARATOR,
-                "Db"
+                "Filter"
             )
         );
     }
 
     /**
-     * @return \PChouse\Attributes\Db\Cache\ICache
+     * @return \PChouse\Attributes\Filter\Cache\ICache
      */
     public static function instance(): ICache
     {
@@ -36,6 +36,25 @@ class Cache extends ABaseCache implements ICache
         return static::$cache;
     }
 
+
+    /**
+     * Get value from cache or null if not exists
+     *
+     * @param \ReflectionClass $reflectionClass
+     *
+     * @return string|null
+     * @throws \PChouse\Attributes\Filter\Cache\FilterCacheException
+     */
+    #[\Override]
+    public function getFromCache(\ReflectionClass $reflectionClass): string|null
+    {
+        if (!$this->cacheExist($reflectionClass)) {
+            return null;
+        }
+
+        return include $this->cacheFileName($reflectionClass);
+    }
+
     /**
      * Put array in cache
      *
@@ -43,9 +62,9 @@ class Cache extends ABaseCache implements ICache
      * @param string $string
      *
      * @return void
-     * @throws \PChouse\Attributes\Db\Cache\DbCacheException
      * @throws \PChouse\Attributes\Filter\Cache\FilterCacheException
      */
+    #[\Override]
     public function putInCache(\ReflectionClass $reflectionClass, string $string): void
     {
         $arrayStringify = \var_export($string, true);
@@ -56,24 +75,8 @@ class Cache extends ABaseCache implements ICache
         );
 
         if ($bytes === false) {
-            throw new DbCacheException("Error write in cache");
+            throw new FilterCacheException("Error write in cache");
         }
     }
 
-    /**
-     * Get value from cache or null if not exists
-     *
-     * @param \ReflectionClass $reflectionClass
-     *
-     * @return string|null
-     * @throws \PChouse\Attributes\Filter\Cache\FilterCacheException
-     */
-    public function getFromCache(\ReflectionClass $reflectionClass): string|null
-    {
-        if (!$this->cacheExist($reflectionClass)) {
-            return null;
-        }
-
-        return include $this->cacheFileName($reflectionClass);
-    }
 }
