@@ -70,9 +70,9 @@ class Filter
     public static function parse(\ReflectionClass $attachedReflectionClass): array
     {
 
-        if (Config::instance()->getDbCache()?->cacheExist($attachedReflectionClass) === true) {
+        if (Config::instance()->getFilterCache()?->cacheExist($attachedReflectionClass) === true) {
             if (null === $serialized = Config::instance()->getFilterCache()?->getFromCache($attachedReflectionClass)) {
-                throw new AttributesException("Error fetching Columns from cache");
+                throw new AttributesException("Error fetching filter from cache");
             }
             return \unserialize($serialized);
         }

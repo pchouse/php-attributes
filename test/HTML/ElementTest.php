@@ -21,33 +21,35 @@ class ElementTest extends TestCase
      */
     public function testInstance(): Element
     {
-        $tag          = Tag::INPUT;
-        $type         = InputType::TEXT;
-        $name         = "element_name";
-        $id           = "element_id";
-        $accept       = Accept::IMAGE;
-        $autocomplete = OnOff::ON;
-        $autofocus    = true;
-        $checked      = true;
-        $dirname      = "input.dir";
-        $disabled     = true;
-        $form         = "form_id";
-        $max          = 999;
-        $maxLength    = 99;
-        $min          = 9;
-        $minLength    = 19;
-        $multiple     = true;
-        $pattern      = "[A-Z]";
-        $placeholder  = "The placeholder";
-        $readonly     = true;
-        $required     = true;
-        $size         = 49;
-        $step         = 29;
-        $value        = "The value";
-        $title        = "The title";
-        $tabindex     = -1;
-        $position     = 59;
-        $layoutWeight = 0;
+        $tag            = Tag::INPUT;
+        $type           = InputType::TEXT;
+        $name           = "element_name";
+        $id             = "element_id";
+        $accept         = Accept::IMAGE;
+        $autocomplete   = OnOff::ON;
+        $autofocus      = true;
+        $checked        = true;
+        $dirname        = "input.dir";
+        $disabled       = true;
+        $form           = "form_id";
+        $max            = 999;
+        $maxLength      = 99;
+        $min            = 9;
+        $minLength      = 19;
+        $multiple       = true;
+        $pattern        = "[A-Z]";
+        $placeholder    = "The placeholder";
+        $readonly       = true;
+        $required       = true;
+        $size           = 49;
+        $step           = 29;
+        $value          = "The value";
+        $title          = "The title";
+        $tabindex       = -1;
+        $position       = 59;
+        $layoutWeight   = 0;
+        $layoutRowIndex = 1;
+        $layoutTabIndex  = 9;
 
         $element = new Element(
             $tag,
@@ -77,6 +79,8 @@ class ElementTest extends TestCase
             $tabindex,
             $position,
             $layoutWeight,
+            $layoutRowIndex,
+            $layoutTabIndex
         );
 
         $this->assertSame($tag, $element->getTag());
@@ -106,6 +110,8 @@ class ElementTest extends TestCase
         $this->assertSame($tabindex, $element->getTabindex());
         $this->assertSame($position, $element->getPosition());
         $this->assertSame($layoutWeight, $element->getLayoutWeight());
+        $this->assertSame($layoutRowIndex, $element->getLayoutRowIndex());
+        $this->assertSame($layoutTabIndex, $element->getLayoutTabIndex());
 
         return $element;
     }

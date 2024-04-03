@@ -93,8 +93,11 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
         private string|null        $title = null,
         private int|null           $tabindex = null,
         private int|null           $position = null,
-        private int|null           $layoutWeight = null
-    ) {
+        private int|null           $layoutWeight = null,
+        private int                $layoutRowIndex = 0,
+        private int|null           $layoutTabIndex = null,
+    )
+    {
     }
 
     /**
@@ -732,6 +735,44 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
     public function setLayoutWeight(?int $layoutWeight): Element
     {
         $this->layoutWeight = $layoutWeight;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLayoutRowIndex(): int
+    {
+        return $this->layoutRowIndex;
+    }
+
+    /**
+     * @param int $layoutRowIndex
+     *
+     * @return Element
+     */
+    public function setLayoutRowIndex(int $layoutRowIndex): Element
+    {
+        $this->layoutRowIndex = $layoutRowIndex;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLayoutTabIndex(): ?int
+    {
+        return $this->layoutTabIndex;
+    }
+
+    /**
+     * @param int|null $layoutTabIndex
+     *
+     * @return Element
+     */
+    public function setLayoutTabIndex(?int $layoutTabIndex): Element
+    {
+        $this->layoutTabIndex = $layoutTabIndex;
         return $this;
     }
 
