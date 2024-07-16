@@ -39,11 +39,11 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
      *                                                                 should be disabled
      * @param string|null $form                                        Specifies the form id the input element
      *                                                                 belongs to
-     * @param string|int|null $max                                     Specifies the maximum value for an input element,
+     * @param string|int|float|null $max                               Specifies the maximum value for an input element,
      *                                                                 number or date
      * @param int|null $maxLength                                      Specifies the maximum number of characters
      *                                                                 allowed in an input element
-     * @param string|int|null $min                                     Specifies a minimum value for an input element
+     * @param string|int|float|null $min                               Specifies a minimum value for an input element
      * @param int|null $minLength                                      Specifies the minimum number of
      *                                                                 characters required in an <input> element
      * @param bool $multiple                                           Specifies that a user can enter more than
@@ -57,47 +57,47 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
      *                                                                 filled out before submitting the form
      * @param int|null $size                                           Specifies the width, in characters,
      *                                                                 of an input element
-     * @param int|null $step                                           Specifies the interval between legal
+     * @param int|float|null $step                                     Specifies the interval between legal
      *                                                                 numbers in an input field
      * @param string|null $value                                       Specifies the value of an input element
      * @param string|null $title                                       Specifies the title of an input element
      * @param int|null $tabindex                                       The tabindex
      * @param int|null $position                                       The position in the form
      * @param int|null $layoutWeight                                   The weight of the element in layout
-     *
+     * @param int $layoutRowIndex
+     * @param int|null $layoutTabIndex
      */
     public function __construct(
-        private Tag|null           $tag = null,
-        private InputType|null     $type = null,
-        private string|null        $name = null,
-        private string|null        $id = null,
-        private Accept|string|null $accept = null,
-        private OnOff|string|null  $autocomplete = OnOff::OFF,
-        private bool               $autofocus = false,
-        private bool               $checked = false,
-        private string|null        $dirname = null,
-        private bool               $disabled = false,
-        private string|null        $form = null,
-        private string|int|null    $max = null,
-        private int|null           $maxLength = null,
-        private string|int|null    $min = null,
-        private int|null           $minLength = null,
-        private bool               $multiple = false,
-        private string|null        $pattern = null,
-        private string|null        $placeholder = null,
-        private bool               $readonly = false,
-        private bool               $required = false,
-        private int|null           $size = null,
-        private int|null           $step = null,
-        private string|null        $value = "",
-        private string|null        $title = null,
-        private int|null           $tabindex = null,
-        private int|null           $position = null,
-        private int|null           $layoutWeight = null,
-        private int                $layoutRowIndex = 0,
-        private int|null           $layoutTabIndex = null,
-    )
-    {
+        private Tag|null              $tag = null,
+        private InputType|null        $type = null,
+        private string|null           $name = null,
+        private string|null           $id = null,
+        private Accept|string|null    $accept = null,
+        private OnOff|string|null     $autocomplete = OnOff::OFF,
+        private bool                  $autofocus = false,
+        private bool                  $checked = false,
+        private string|null           $dirname = null,
+        private bool                  $disabled = false,
+        private string|null           $form = null,
+        private string|int|float|null $max = null,
+        private int|null              $maxLength = null,
+        private string|int|float|null $min = null,
+        private int|null              $minLength = null,
+        private bool                  $multiple = false,
+        private string|null           $pattern = null,
+        private string|null           $placeholder = null,
+        private bool                  $readonly = false,
+        private bool                  $required = false,
+        private int|null              $size = null,
+        private int|float|null        $step = null,
+        private string|null           $value = "",
+        private string|null           $title = null,
+        private int|null              $tabindex = null,
+        private int|null              $position = null,
+        private int|null              $layoutWeight = null,
+        private int                   $layoutRowIndex = 0,
+        private int|null              $layoutTabIndex = null,
+    ) {
     }
 
     /**
@@ -381,9 +381,9 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
     /**
      * Specifies the maximum value for an <input> element, number or date
      *
-     * @return int|string|null
+     * @return int|float|string|null
      */
-    public function getMax(): int|string|null
+    public function getMax(): int|float|string|null
     {
         return $this->max;
     }
@@ -391,11 +391,11 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
     /**
      * Specifies the maximum value for an <input> element, number or date
      *
-     * @param int|string|null $max
+     * @param int|float|string|null $max
      *
      * @return Element
      */
-    public function setMax(int|string|null $max): Element
+    public function setMax(int|float|string|null $max): Element
     {
         $this->max = $max;
         return $this;
@@ -427,9 +427,9 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
     /**
      * Specifies a minimum value for an <input> element
      *
-     * @return int|string|null
+     * @return int|float|string|null
      */
-    public function getMin(): int|string|null
+    public function getMin(): int|float|string|null
     {
         return $this->min;
     }
@@ -437,11 +437,11 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
     /**
      * Specifies a minimum value for an <input> element
      *
-     * @param int|string|null $min
+     * @param int|float|string|null $min
      *
      * @return Element
      */
-    public function setMin(int|string|null $min): Element
+    public function setMin(int|float|string|null $min): Element
     {
         $this->min = $min;
         return $this;
@@ -611,9 +611,9 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
     /**
      * Specifies the interval between legal numbers in an input field
      *
-     * @return int|null
+     * @return int|float|null
      */
-    public function getStep(): ?int
+    public function getStep(): int|float|null
     {
         return $this->step;
     }
@@ -621,11 +621,11 @@ class Element extends AAttributes implements \JsonSerializable, \Stringable
     /**
      * Specifies the interval between legal numbers in an input field
      *
-     * @param int|null $step
+     * @param int|float|null $step
      *
      * @return Element
      */
-    public function setStep(?int $step): Element
+    public function setStep(int|float|null $step): Element
     {
         $this->step = $step;
         return $this;
